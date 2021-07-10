@@ -48,6 +48,10 @@ public:
 
  */
 
+
+/*
+
+JAVA
 public class LongestBinary_subArray {
 
 //     1010111100101
@@ -80,3 +84,37 @@ public class LongestBinary_subArray {
         
     }
 }
+
+
+*/
+class Solution {
+public:
+    int findMaxLength(vector<int>& nums) {
+        
+        
+        
+        if(nums.empty()) return 0;
+        int globalmax = 0;
+        unordered_map<int, int> umap;
+        umap[0] = -1;
+        int cummSum = 0;
+        for(int i =0; i< nums.size();i++) {
+            //cummSum += nums[i] == 1 ? 1 : -1;
+            if(nums[i]==1) {
+                cummSum++;
+            }else{
+                cummSum--;
+            }
+            
+            // cumm sum not found
+            if(umap.find(cummSum) == umap.end() ) {
+                umap[cummSum] = i;
+            }else{
+                globalmax = std::max(globalmax, i- umap.find(cummSum)->second);
+            }
+        }
+        
+        return globalmax;
+        
+    }
+};
