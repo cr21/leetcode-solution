@@ -1,4 +1,47 @@
 /*
+
+Brute force
+
+class Solution {
+public:
+    int findMaxLength(vector<int>& nums) {
+        
+        int _max = INT_MIN;
+        
+        
+        for(int i =0; i< nums.size();i++) {
+            int ones = 0;
+            int zeros =0;
+            if(nums[i] ==0) {
+                zeros++;
+            }else{
+                ones++;
+            }
+            for(int j = i+1; j< nums.size();j++) {
+                if(nums[j] == 1){
+                    ones++;
+                }else{
+                    zeros++;
+                }
+                
+                if(zeros == ones) {
+                    _max = std::max (_max, j-i+1); 
+                }
+                
+                
+            }
+        }
+        
+        if(_max == INT_MIN) return 0;
+        return _max;
+        
+    }
+};
+
+*/
+
+
+/*
  Time Complexity :  O(N)
  Space Complexity : O(N)
  is Worked on leetcode : YES
