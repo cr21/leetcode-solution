@@ -1,3 +1,50 @@
+/**
+
+C++
+
+class Solution {
+public:
+    int subarraySum(vector<int>& nums, int k) {
+        
+        // map to hold <running sum, count>
+        unordered_map<int, int> map;
+        map[0] = 1;        
+        int runningSum = 0;
+        int counter = 0;
+        
+        for(int i =0;i< nums.size(); i++) {
+            
+            runningSum += nums[i];
+            // if running sum not in map
+            int complement = runningSum-k;
+            
+            if(map.find(complement) != map.end()) {
+                counter += map.find(complement)->second;
+            
+            }
+            
+            
+            if(map.find(runningSum) == map.end()) {
+                map[runningSum] =0;
+            }
+            
+            map[runningSum]  = map.find(runningSum)->second + 1;
+            
+            
+        }
+        
+      
+        
+        return counter;
+        
+        
+        
+    }
+};
+
+**/
+
+
 /*
 
 Time Complexity : O(N) N size of input
