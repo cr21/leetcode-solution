@@ -181,3 +181,73 @@ public:
 };
 
 */
+
+
+
+/**
+
+2nd solution Heap Based Solution
+
+/*
+Algorithm
+
+Initialize a heap timeslots and push time slots that last longer than duration into it.
+Iterate until there's only one time slot remaining in timeslots:
+Pop the first time slot [start1, end1] from timeslots.
+Retrieve the next time slot [start2, end2], which is the current top element in timeslots.
+If we find end1 >= start2 + duration, because start1 <= start2, the common slot is longer than duration and we can return it.
+If we don't find the common slot that is longer than duration, return an empty array.
+*/
+
+
+/*
+
+class Solution {
+public:
+    vector<int> minAvailableDuration(vector<vector<int>>& slots1, vector<vector<int>>& slots2, int duration) {
+        priority_queue<vector<int>, vector<vector<int>>, greater<vector<int>>> pq;
+        
+        // push all the timeslots for person 1 which is greater or equals to duration
+        for(auto vec : slots1) {
+            
+            if(vec[1] -vec[0] >= duration){
+                pq.push(vec);
+            }
+        }
+        
+        
+        
+        // push all the timeslots for person 2 which is greater or equals to duration
+        for(auto vec : slots2) {
+            
+            if(vec[1] -vec[0] >= duration){
+                pq.push(vec);
+            }
+        }
+        
+        
+        
+        while(pq.size() > 1)  {
+            
+            auto first = pq.top();
+            pq.pop();
+            auto second = pq.top();
+            
+            // if first contains second and second start +duration < first end that means we got an answer
+            if(first[1] >= second[0] + duration) {
+                return vector<int> {second[0], second[0]+duration};
+            }
+            
+        }
+        vector<int>  res;
+        return res;
+        
+    }
+    
+};
+
+
+
+
+
+**/
