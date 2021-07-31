@@ -128,3 +128,56 @@ public:
         return res;
     }
 };
+
+
+/*
+
+More elegant solution, thanks to leetcode premium solution : 
+
+
+Sort both slots1 and slots2 by the start time.
+Initialize two pointers, pointer1 and pointer2, pointing to the beginning of slots1 and the beginning of slots2 respectively.
+Iterate until pointer1 reaches the end of slots1 or pointer2 reaches the end of slots2:
+Find the common slot of slots1[pointer1] and slots2[pointer2].
+If the common slot is greater than or equal to duration, return the result.
+Else, find the slot that ends earlier and move the pointer.
+If no common slot is found, return an empty array.
+
+
+
+
+class Solution {
+public:
+    vector<int> minAvailableDuration(vector<vector<int>>& slots1, vector<vector<int>>& slots2, int duration) {
+        
+        std::sort(slots1.begin(), slots1.end());
+        
+        std::sort(slots2.begin(), slots2.end());
+        
+        
+        int first = 0;
+        int second = 0;
+        
+        while(first < slots1.size() && second < slots2.size()) {
+            
+            int leftIntersect = std::max(slots1[first][0], slots2[second][0]);
+            int rightIntersect = std::min(slots1[first][1], slots2[second][1]);
+            
+            if(rightIntersect - leftIntersect >= duration) {
+                
+                return vector<int> { leftIntersect, leftIntersect+duration};
+            }
+            if(slots1[first][1] > slots2[second][1]) {
+                second++;
+            }else{
+                first++;
+            }
+             
+        }
+        
+        vector<int> res;
+        return res;
+    }
+};
+
+*/
