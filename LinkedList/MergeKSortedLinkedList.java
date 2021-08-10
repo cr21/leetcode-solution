@@ -120,3 +120,61 @@ class Solution {
         return res.next;
     }
 }
+
+
+/*
+2) Heap Solution
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode mergeKLists(ListNode[] lists) {
+        
+        if(lists == null ){
+            return null;
+        }
+        
+        if(lists.length == 0) {
+            return null;
+        }
+        
+        PriorityQueue<ListNode> pq =new PriorityQueue<>(lists.length, (x, y) -> {return x.val - y.val;} );
+        
+        for(int i=0;i <lists.length; i++) {
+            if(lists[i] != null) {
+                pq.add(lists[i]);   
+            }
+            
+        }
+        
+        ListNode dummy = new ListNode(-1);
+        ListNode res = dummy;
+        while(!pq.isEmpty()) {
+            
+            ListNode node = pq.poll();
+            ListNode nextNode = node.next;
+            
+            if(nextNode != null) {
+                pq.add(nextNode);
+            }
+            
+            dummy.next = node;
+            dummy = dummy.next;
+            
+            
+            
+        }
+        
+        return res.next;
+        
+    }
+}
+
