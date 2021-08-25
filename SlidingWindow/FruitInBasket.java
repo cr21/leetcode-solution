@@ -47,6 +47,8 @@ Constraints:
 /*
 TIME LIMIT EXCEED
 */
+
+/*
 class Solution {
     public int totalFruit(int[] fruits) {
         
@@ -86,5 +88,57 @@ class Solution {
         return currMax;
         
         
+    }
+}
+*/
+
+
+// SLIDING WINDOW HASHMAP
+
+class Solution {
+    public int totalFruit(int[] fruits) {
+        
+        Map<Integer, Integer> counter = new HashMap();
+        
+        if(fruits == null ) return 0;
+        if(fruits.length <=2 ) return fruits.length;
+        
+        int left = 0;
+        int curr = 0;
+        int global = 0;
+        int right = 0;
+        while(right < fruits.length) {
+            
+//             if map already contains key increment the counter
+            if(counter.containsKey(fruits[right])) {
+                counter.put(fruits[right], counter.get(fruits[right]) + 1);
+                curr++;
+            }else{
+                
+//                  if map size is less than two we can add the fruit in new basket and increment the counter
+                if(counter.size() <2) {
+                    counter.put(fruits[right],1);
+                    curr++;
+                }else{
+//                     if we already picked two different fruits we need  to update the maximum number of fruits till now
+//                      add third basket Temporarily   and increment current counter
+                    global = Math.max(global, curr);
+                    counter.put(fruits[right],1);
+                    curr++;
+//                  keeps on increment left pointer (remove the element) till the map has two types of fruits basket left
+                    while(counter.size()!= 2) {
+                        //decrement the size of fruits in basket
+                        counter.put(fruits[left], counter.get(fruits[left])-1);
+                        // remove the basket when it becomes empty
+                        counter.remove(fruits[left],0);
+                        left+=1;
+                        curr--;
+                    }
+                } 
+            }
+            global = Math.max(global, curr);
+            right++;
+        }
+        return global;      
     }
 }
