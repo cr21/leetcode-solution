@@ -73,3 +73,33 @@ class Solution {
         
     }
 }
+
+
+/*
+
+// no need to maintain count store the index of character instead
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        
+        
+        HashMap<Character, Integer> counter = new HashMap();
+        
+        int right=0;
+        int left = 0;
+        int global = 0;
+        
+        for(;right < s.length();right++ ) {
+            Character  rightChar = s.charAt(right);
+            if(counter.containsKey(rightChar)) {
+                left = Math.max(left, counter.get(rightChar));
+            }
+            global = Math.max(global, right-left+1);
+            counter.put(rightChar, right+1);
+        }
+        
+        return global;
+        
+    }
+}
+
+*/
