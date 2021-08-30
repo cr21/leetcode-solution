@@ -70,3 +70,62 @@ class Solution {
         return true;
     }
 }
+
+
+
+/*
+
+Optimized using Sliding Window:
+
+
+
+
+*/
+
+
+class Solution {
+    public boolean checkInclusion(String s1, String s2) {
+        
+        
+        
+    if(s1.length() > s2.length()){
+            return false;
+    }
+        
+       int [] s1Map = new int[26];
+       int [] s2Map = new int[26];
+        
+        
+        
+        for(int i =0;i<s1.length(); i++) {
+            s1Map[s1.charAt(i) - 'a']++;
+            s2Map[s2.charAt(i) - 'a']++;
+        }
+        
+        for(int i = 0; i < s2.length() - s1.length();i++) {
+            if(matches(s1Map,s2Map)) {
+                return true;
+            }
+            
+            // remove the first element because this element is going out from window
+            s2Map[s2.charAt(i)-'a']--;
+            // add new element into window end
+            s2Map[s2.charAt(i+s1.length()) - 'a']++;
+        }
+        //  last window check
+        return matches(s1Map, s2Map);   
+    }
+    
+    
+    private boolean matches(int[] map1, int[] map2) {
+        
+        for(int i=0; i<  26;i++) {
+            if(map1[i] !=map2[i]){
+                return false;
+            }
+        }
+        
+        
+        return true;
+    }
+}
