@@ -202,3 +202,79 @@ class Solution {
     
     
 }
+
+
+
+/*
+
+
+ANOTHER SLIDING WINDOW
+*/
+
+
+class Solution {
+    public boolean checkInclusion(String s1, String s2) {
+        
+        if(s1 == null ) return false;
+        
+        if(s1.length() > s2.length() ) return false;
+        
+        
+        Map<Character, Integer> map = new HashMap();
+        int matched = 0;
+        int windowStart=0;
+        int windowEnd = 0;
+        
+        for(int i=0;i<s1.length(); i++) {
+            map.put(s1.charAt(i), map.getOrDefault(s1.charAt(i),0)+1);
+        }
+        
+        while(windowEnd < s2.length()) {
+            Character rChar = s2.charAt(windowEnd);
+//          IF map contains current windowEnd element 
+//          Decrement it's count in hash map if it becomes zero we have found all 
+//          the necessary count for this charcter in pattern so increment the matched
+            if(map.containsKey(rChar)) {
+                map.put(rChar, map.get(rChar)-1);
+                if(map.get(rChar) == 0) {
+                    matched++;
+                }
+            }
+            
+            // if matched count matches the total number of chars in map we get the pattern 
+            if(matched == map.size()) {
+                return true;
+            }
+            
+            
+            // check if we need to shrink the window or not
+            // if window end is greater than current window pattern length
+            // we need to shrink the window and move
+            // shift start pointer to start pointer+1
+            if(windowEnd >= s1.length()-1) {
+                
+                Character lChar = s2.charAt(windowStart++);
+                // if map contains elements to be removed
+                if(map.containsKey(lChar)) {
+                    // if the count of this is zero that means we have enough count for this char but are removing it from map 
+                    // so decrement the match count 
+                    // we reduced the count by 1 so we have to make it up by adding the count to map
+                    if(map.get(lChar) == 0){
+                        matched--;
+                    }
+                    
+                    map.put(lChar, map.getOrDefault(lChar,0)+1);
+                    
+                }
+                
+                
+            }
+            
+            
+            windowEnd++;
+        }
+        
+        return matched == map.size();
+        
+    }
+}
