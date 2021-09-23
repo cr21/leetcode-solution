@@ -141,3 +141,32 @@ public:
 };
 
 */
+
+
+/*
+
+class Solution {
+public:
+    int findDuplicate(vector<int>& nums) {
+        
+        int turtle = nums[0];
+        int rabbit = nums[0];
+        // rabbit will go twice the speed of turtle
+        do{
+            turtle = nums[turtle];
+            rabbit = nums[nums[rabbit]];
+        }while(turtle != rabbit);
+        
+        
+        // move turtle to start of the array 
+        // now traverse rabbit and turtle at same speed
+        turtle = nums[0];
+        while(turtle != rabbit) {
+            turtle = nums[turtle];
+            rabbit = nums[rabbit];
+        }
+        
+        return rabbit;
+    }
+};
+*/
