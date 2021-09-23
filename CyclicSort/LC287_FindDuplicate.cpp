@@ -100,3 +100,44 @@ public:
     arr[j] = temp;
   }
 };
+
+
+/*
+
+class Solution {
+public:
+    int findDuplicate(vector<int>& nums) {
+        
+        int low = 1;
+        int high = nums.size();
+        int duplicate = -1;
+        auto small_or_eq = [&](int mid) {
+            int count = 0;
+            for(auto & i: nums){
+//              count number of element that are less or equals to mid element
+                if(i <= mid){
+                    count++;
+                }
+            } 
+            return count;
+        };
+        
+        while(low <= high) {
+            int mid = (low + high)/2;
+            //    count number of element that are less or equals to mid element
+            //    if count is greater than mid then we find the number that is duplicate
+            //    we want to find the smallest number that has count greater than mid so we will search in lower part
+            if(small_or_eq(mid) > mid) {
+                duplicate = mid;
+                high = mid-1;
+            }else{
+                low = mid+1;
+            }
+        }
+        
+        return duplicate;
+        
+    }
+};
+
+*/
