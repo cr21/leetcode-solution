@@ -8,6 +8,19 @@
     
     Any problem you faced while coding this :
         Handling edge case was tricky
+        
+        // if duplicate allowed add below in while loop starts
+         /*
+                //if left and left+1 are same this is not going to help us so move 
+                while(left <  right && nums[left] == nums[left+1]) {
+                    left++;
+                } 
+
+                // if right and right -1 are same this is not going to help us so move
+                while(left <  right && nums[right] == nums[right-1]) {
+                    right--;
+                } 
+            */
 */
 
 public class Search_InRotated_sorted_Array {
