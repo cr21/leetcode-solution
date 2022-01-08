@@ -6,7 +6,6 @@ Clarification: The input/output format is the same as how LeetCode serializes a 
 
  
 
-
   
   /**
  * Definition for a binary tree node.
@@ -86,3 +85,108 @@ public class Codec {
 // Codec ser = new Codec();
 // Codec deser = new Codec();
 // TreeNode ans = deser.deserialize(ser.serialize(root));
+
+
+
+
+/*
+BFS VERsION
+
+
+
+import java.util.StringJoiner;
+public class Codec {
+
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        StringJoiner sj = new StringJoiner(",");
+        
+        if(root == null){
+            return "";
+        }
+        
+        String enc = BFS(root, sj);
+        System.out.println("enc "+enc);
+        return enc;
+        
+        
+    }
+    
+    private String BFS(TreeNode node, StringJoiner sj) {
+        
+        Queue<TreeNode> q = new LinkedList();
+        q.add(node);
+        
+        while(!q.isEmpty()) {
+            
+            TreeNode front = q.poll();
+            
+            if(front == null ){
+                sj.add("X");
+            }else{
+                sj.add(String.valueOf(front.val));
+                // process left subtree
+            
+                q.add(front.left);
+                q.add(front.right);
+            }
+            
+            
+        }
+        
+        return sj.toString();
+        
+    }
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        if(data.isBlank() || data.isEmpty()) {
+            return null;
+        }
+        Iterator<String> iter = Arrays.stream(data.split(",")).iterator();
+        
+        return BFS_deser(iter);
+        
+    }
+    
+    private TreeNode BFS_deser(Iterator<String> iter) {
+        
+        String currStr = iter.next();
+        TreeNode node = new TreeNode(Integer.parseInt(currStr));
+        Queue<TreeNode> q = new LinkedList();
+        q.add(node);
+        
+        while (iter.hasNext()  && !q.isEmpty()) {
+            TreeNode front = q.poll();
+            // process left
+            if(iter.hasNext() ) {
+                
+                String next_str = iter.next();
+                if(!next_str.equals("X")) {
+                    front.left = new TreeNode(Integer.parseInt(next_str));
+                    q.add(front.left);
+                }
+                
+            }
+            // process right 
+            if(iter.hasNext()) {
+                String next_str = iter.next();
+                if(!next_str.equals("X")) {
+                    front.right = new TreeNode(Integer.parseInt(next_str));
+                    q.add(front.right);
+                }
+                
+                
+            }
+            
+            
+        }
+        return node;
+        
+        
+    }
+}
+*/
+
+
+
