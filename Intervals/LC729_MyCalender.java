@@ -102,4 +102,31 @@ class MyCalendar {
     }
 }
 
+/*
+Brute force 
 
+class MyCalendar {
+    
+    List<int[]> bookings;
+
+    public MyCalendar() {
+        bookings = new ArrayList();
+    }
+    
+    public boolean book(int start, int end) {
+        
+        int [] newBooking = new int[]{start, end};
+        for(int[] _booking: bookings) {
+           
+            if(_booking[0] < newBooking[1] && newBooking[0] <  _booking[1] ) {
+                return false;
+            }
+        }
+        
+        bookings.add(newBooking);
+        return true;
+    }
+}
+
+
+*/
