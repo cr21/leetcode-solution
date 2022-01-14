@@ -84,3 +84,36 @@ class Solution {
            
     }
 }
+
+// solution iterative Inorder traversal
+class Solution {
+    public boolean isValidBST(TreeNode root) {
+        
+        if(root == null ) return true;
+        
+        Stack<TreeNode> st = new Stack<>();
+        TreeNode prevNode = null;
+        while (root != null || !st.isEmpty()) {
+            
+            while(root != null) {
+                st.push(root);
+                root = root.left;
+            }
+            
+            root = st.pop();
+            
+            if(prevNode != null && root.val <= prevNode.val    ) {
+                return false;
+            }
+            prevNode = root;
+            
+            root = root.right;
+        
+            
+        }
+        
+        
+        
+        return true;
+    }
+}
