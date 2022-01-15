@@ -56,3 +56,99 @@ class Solution {
     
    
 }
+
+/*
+STACK Iterative Solution
+
+
+
+*/
+
+class Pair<K,V> {
+    
+    K key;
+    V value;
+    
+    Pair(K a, V b) {
+        this.key = a;
+        this.value = b;
+    }
+    
+    public K getKey(){
+        return this.key;
+    }
+    
+    public V getValue() {
+        return this.value;
+    }
+    
+    
+}
+class Solution {
+    public void flatten(TreeNode root) {
+        
+        if (root == null) {
+            return;
+        }
+        
+        int START = 1, END = 2;
+        
+        TreeNode tailNode = null;
+        Stack<Pair<TreeNode, Integer>> st = new Stack();
+        st.push(new Pair<TreeNode, Integer> (root, START));
+        
+        while(!st.isEmpty()) {
+            
+            Pair<TreeNode, Integer> popped = st.pop();
+            
+            TreeNode currentNode = popped.getKey();
+            Integer recursionState = popped.getValue();
+            
+            // if leaf node
+            
+            if(currentNode.left == null && currentNode.right == null) {
+                tailNode = currentNode;
+                continue;
+            }
+            
+            // if node recursion state is start that means it has not yet processed its left
+            // sub tree
+            if(recursionState == START) {
+                
+                if(currentNode.left != null) {
+                    
+                    st.push(new Pair<TreeNode, Integer> (currentNode,END ));
+                    st.push(new Pair<TreeNode, Integer> (currentNode.left,START));
+                    
+                    
+                }else if(currentNode.right != null) {
+                    
+                    st.push(new Pair<TreeNode,Integer> (currentNode.right, START));
+                }
+                
+            }else{
+                
+                // if currentNode is in END recursion STATE
+                
+                TreeNode rightNode = currentNode.right;
+                
+                if(tailNode!= null) {
+                    tailNode.right = currentNode.right;
+                    currentNode.right = currentNode.left;
+                    currentNode.left = null;
+                    rightNode = tailNode.right;
+                     
+                }
+                
+                if(rightNode != null) {
+                    st.push(new Pair<TreeNode, Integer> (rightNode, START));
+                }
+            }
+            
+        }
+        
+        
+    }
+    
+    
+}
