@@ -21,23 +21,36 @@ Output: [0]
 class Solution {
     public void flatten(TreeNode root) {
         
+        // if root is null or both of it;s children are null return
         if(root == null || (root.left == null && root.right == null) ) {
             return ;
         }
         
+        // if left subtree of current node is not null proceed with flattening left  subtree 
+        // after flattening left subtree
+        // set current node right = node left 
+        // set node left to null
+        // maintain temp variable to hold node's right before updating right pointer
+        // 
         if(root.left != null) {
             
             flatten(root.left);
             TreeNode tempRight = root.right;
             root.right = root.left;
             root.left = null;
+            // iterate over the right most subtree
+            // when we will find node at most right subtree
+            // this node points to flattening of right subtree
+            
             while(root.right !=null) {
                 root = root.right;
             }
+            // set current right most node next node to temp right node we store it earlier
             root.right = tempRight;
             
         }
         
+        // flatten right subtree
         flatten(root.right);
     }
     
