@@ -67,3 +67,33 @@ class Solution {
     
    
 }
+
+/*
+
+Iterative Stack Solution : 
+
+
+public int kthSmallest(TreeNode root, int k) {
+        Stack<TreeNode> st = new Stack();
+        st.add(root);
+        
+        while(!st.isEmpty()) {
+            while(root != null) {
+                st.push(root);
+                root = root.left;
+            }
+            
+            root = st.pop();
+            k--;
+            
+            if(k == 0) {
+                return root.val;
+            }
+            root = root.right;
+        }
+        
+        
+        return -1;
+        
+}
+*/
