@@ -59,9 +59,81 @@ public:
 
 
 
+// JAVA solution
 
 
 
+
+class Solution {
+    public int minMeetingRooms(int[][] intervals) {
+        
+        if(intervals == null || intervals.length == 0) return 0;
+        
+        if(intervals.length == 1) return 1;
+        
+        Arrays.sort(intervals, (a,b) -> a[0]-b[0] ) ;
+        // ((A,B) -> A-B);
+        PriorityQueue<Integer> pq = new PriorityQueue<>((a,b) -> a - b);
+        int count=0;
+        
+        pq.add(intervals[0][1]);
+        
+        for(int i=1;i<intervals.length;i++) {
+            int [] cur= intervals[i];
+            
+            int cur_st = cur[0];
+            int cur_end = cur[1];
+            
+            Integer top_e = pq.peek();
+            
+            if(top_e<=cur_st) {
+                pq.poll();  
+            }
+            pq.add(cur_end); 
+            
+            
+        }
+        return pq.size();
+        
+    }
+    
+    
+    public int minMeetingRoomsBruteForce(int[][] intervals) {
+        
+        if(intervals == null || intervals.length == 0) return 0;
+        
+        if(intervals.length == 1) return 1;
+        
+        Arrays.sort(intervals, (a,b) -> a[0]-b[0] ) ;
+        // ((A,B) -> A-B);
+        PriorityQueue<Integer> pq = new PriorityQueue<>((a,b) -> a-b);
+        int count =1;
+        Queue<int[]> q = new LinkedList();
+        q.add(intervals[0]);
+        for(int i=1;i< intervals.length;i++) {
+            int [] cur_interval = intervals[i];
+            boolean flag = false;
+            int[] removed = new int[2];
+            for(int []prev:q) {
+                if(prev[1] <= cur_interval[0]) {
+                    // we can use this
+                    flag = true;
+                    removed = prev;
+                }
+            }
+            
+            if(!flag){
+                count++; 
+            }else{
+                q.remove(removed); 
+            }
+            q.add(cur_interval);
+            
+        }
+        return count;
+        
+    }
+}
 
 
 
