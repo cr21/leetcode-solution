@@ -66,3 +66,110 @@ class Solution {
         
     }
 }
+
+
+
+/*
+Optimized with Trie with backtracing
+
+*/
+
+class Solution {
+    
+    List<String> res = new ArrayList();
+    char[][] _board = null;
+    int m;
+    int n;
+    int [][] dirs = new int[][] {{-1,0},{1,0},{0,1},{0,-1}};
+    class TrieNode {
+        TrieNode() {
+            
+        }
+        
+        String word = null;
+        
+        HashMap<Character,TrieNode> children = new HashMap();
+        
+        
+      }
+    
+    public List<String> findWords(char[][] board, String[] words) {
+        // add words to Trie
+        m = board.length;
+        n = board[0].length;
+        TrieNode root = new TrieNode();
+        
+        // add words to trie
+        for(String word: words) {
+            TrieNode cur = root;
+            
+            for(int i=0;i<word.length();i++) {
+                Character ch = word.charAt(i);
+                if(!cur.children.containsKey(ch)) {
+                    cur.children.put(ch, new TrieNode());
+                }
+                cur = cur.children.get(ch);
+            }  
+            cur.word = word;  
+        }
+        
+        this._board  = board;
+        
+        
+        int rows = board.length;
+        int cols = board[0].length;
+        
+        for(int i=0;i<rows;i++) {
+            for(int j=0;j<cols;j++) {
+                Character ch = _board[i][j];
+                // if character at location i and j are children of root or there is word starting at current i and j cell run backtrack
+                if(root.children.containsKey(ch)) {
+                    dfs(i,j, root);
+                }   
+            }
+        }
+        
+        return res;
+    }
+    
+    
+    private void dfs(int i, int j, TrieNode parent) {
+        // get current location letter
+        Character letter = this._board[i][j];
+        // check if parent has children starting with character at current cell
+        TrieNode currNode = parent.children.get(letter);
+        
+        // if we find character and it is the word that means we found the word in trie which is in board and dictionary we will add it to answer
+        if(currNode.word != null ){
+            res.add(currNode.word);
+            currNode.word = null;
+        }
+        
+        // mask current location so that we won't repeatedly visit the same state
+        _board[i][j] = '#';
+        
+        // iterate over North, south, east, and west direction
+        for(int[] dir: dirs) {
+            
+            
+            int newI = dir[0] + i;
+            int newJ = dir[1] + j;
+            
+            if(newI < 0 || newI >= m || newJ <0 || newJ >= n ){
+                continue;
+            }
+            
+            // if letter at new location is children of current node
+            // run dfs over childrent of current node
+            if(currNode.children.containsKey(this._board[newI][newJ])) {
+                dfs(newI, newJ, currNode);
+            }
+        }
+        
+        // unmaks the cell location with original content before leaving
+        this._board[i][j] = letter;
+        
+        
+        
+    }
+}
