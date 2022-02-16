@@ -95,3 +95,63 @@ Given an integer kill representing the ID of a process you want to kill, return 
         
     }
 }
+
+
+
+/*
+
+BFS and DFS solution added
+
+
+
+*/
+
+class Solution {
+    
+    
+    
+    
+    HashMap<Integer, List<Integer>> map;
+    public List<Integer> killProcess(List<Integer> pid, List<Integer> ppid, int kill) {
+        map = new HashMap();
+        
+        for(int i=0;i<ppid.size();i++) {
+            map.putIfAbsent(ppid.get(i), new ArrayList());
+            map.get(ppid.get(i)).add(pid.get(i));
+            
+        }
+        
+        List<Integer> killProcesses = new ArrayList();
+        
+        // dfs( kill, killProcesses, map);
+        bfs(kill, killProcesses, map);
+        return killProcesses;
+    }
+    
+    private void bfs(int kill,List<Integer> killing, HashMap<Integer, List<Integer>> map) {
+        Queue<Integer> q = new LinkedList();
+        q.add(kill);
+        while(!q.isEmpty()) {
+            Integer i  = q.poll();
+            killing.add(i);
+            if(map.containsKey(i)){
+               for(Integer child : map.get(i)){
+                   q.add(child);
+               }  
+            }
+        }
+        
+        
+    }
+    private void dfs( int kill,List<Integer> killing, HashMap<Integer, List<Integer>> map ) {
+        killing.add(kill);
+        if(!map.containsKey(kill)) {
+            return ;
+        }
+        
+        for(Integer i: map.get(kill)) {
+            dfs(i, killing, map);
+        }
+        
+    }
+}
