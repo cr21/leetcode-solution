@@ -132,3 +132,23 @@ class Solution {
         
     }
 }
+
+
+/*
+Greedy Solution : 
+
+*/
+
+
+class Solution {
+    public boolean canJump(int[] nums) {
+        int left_position = nums.length-1;
+        
+        for(int i=nums.length-2; i >=0;i--) {
+            if(nums[i]+i >= left_position){
+                left_position=i;
+            }
+        }
+        return left_position==0;
+    }
+}
