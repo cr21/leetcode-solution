@@ -83,3 +83,65 @@ class Solution {
     }
 
 }
+
+
+
+class Solution {
+    
+    int N;
+    
+    public boolean isValidSudoku(char[][] board) {
+        N = 9;
+        
+        HashSet<Character>[] rows = new HashSet[N];
+        
+        HashSet<Character>[] cols = new HashSet[N];
+        
+        HashSet<Character>[] boxes = new HashSet[N];
+        
+        for(int row = 0;row<N;row++) {
+            rows[row] = new HashSet();
+            cols[row]=new HashSet();
+            boxes[row] = new HashSet();
+        }
+        
+        
+        for(int row = 0;row<N; row++) {
+            for(int col = 0;col<N;col++) {
+                char ch = board[row][col];
+                if(!Character.isDigit(ch)) {
+                    continue;
+                }else{
+                    
+                    // check in rows
+                    if(rows[row].contains(ch)){
+                        return false;
+                    }
+                    rows[row].add(ch);
+                    
+                    // check in cols
+                    if(cols[col].contains(ch)){
+                        return false;
+                    }
+                    
+                    cols[col].add(ch);
+                    
+                    
+                    // check in box
+                    
+                    int box_id = (row/3)*3 + (col/3);
+                    
+                    if(boxes[box_id].contains(ch)) return false;
+                    boxes[box_id].add(ch);
+                    
+                    
+                }
+                
+                
+            }
+            
+            
+        }
+        return true;
+    }
+}
